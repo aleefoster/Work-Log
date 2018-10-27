@@ -31,6 +31,7 @@ def display_main_menu():
             elif menu_option == 2:
                 # Call search menu function
                 display_search_menu()
+            # Potential issue with quitting?
             elif menu_option == 3:
                 break
         except ValueError:
@@ -101,7 +102,12 @@ def date_search():
         print(item)
     # Get Date
     search_date = input("Enter date to search for (MM/DD/YYYY): ")
-    # Call display entry w/ search date
+    # Add matching results to search_results
+    for item in task_list:
+        if item["date"] == search_date:
+            search_results.append(item)
+    display_entry(search_results)
+
 # Search Date Range function
 def date_range_search():
     # Get Start Date
@@ -122,16 +128,34 @@ def regex_search():
     # Get the Regex pattern to search for
     search_pattern = input("Enter a regular expression pattern to search for: ")
 # Display Entry function
-    # Task Name:
-    # Date:
-    # Time Spent:
-    # Notes:
-    # Result # of Total#
-    # Next
-    # Edit
-    # Delete
-    # Previous
-    # Return to Search Menu
+def display_entry(search_results):
+    count = 0
+    current_entry = search_results[count]
+
+    print("Task Name: {}".format(current_entry["task"]))
+    print("Date: {}".format(current_entry["date"]))
+    print("Time Spent: {}".format(current_entry["time"]))
+    print("Notes: {}\n".format(current_entry["notes"]))
+
+    print("[N]ext\t[E]dit\t[D]elete\t[P]revious")
+    print("[R]eturn to search menu")
+
+    choice = input()
+    entry_navigation(choice)
+
+# Entry Navigation function
+def entry_navigation(choice):
+    if choice.upper() == "N":
+        display_entry(search_results)
+    elif choice.upper() == "E":
+        pass
+    elif choice.upper() == "D":
+        pass
+    elif choice.upper() == "P":
+        pass
+    elif choice.upper() == "R":
+        display_search_menu()
+
 # Delete Entry function
 # Edit Entry function
 
