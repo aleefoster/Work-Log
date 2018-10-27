@@ -10,8 +10,7 @@ def clear_screen():
 def display_main_menu():
     menu_option = 0
     while menu_option != 3:
-        #clear screen
-        #clear_screen()
+        clear_screen()
         print("""Work Log
         Menu:
         1) Add new entry
@@ -39,6 +38,7 @@ def display_main_menu():
 
 # Add entry function
 def add_entry():
+    clear_screen()
     # Get Task Name
     task_name = input("Task name: ")
     # Get Date (from user or system?)
@@ -57,6 +57,7 @@ def add_entry():
     
 # Search entries menu
 def display_search_menu():
+    clear_screen()
     search_option = 0
     print("""Search Menu:
     1) Exact Date
@@ -89,6 +90,7 @@ def display_search_menu():
 
 # Search Exact Date function
 def date_search():
+    clear_screen()
     # List dates
     unique_dates = []
     for item in task_list:
@@ -106,10 +108,11 @@ def date_search():
     for item in task_list:
         if item["date"] == search_date:
             search_results.append(item)
-    display_entry(search_results)
+    display_entry(search_results, result_count)
 
 # Search Date Range function
 def date_range_search():
+    clear_screen()
     # Get Start Date
     start_date = input("Enter the start date (MM/DD/YYYY): ")
     # Get End Date
@@ -117,20 +120,24 @@ def date_range_search():
     # Call display entries
 # Time Spent function
 def time_spent_search():
+    clear_screen()
     # Get time spent (in minutes)
     time_spent = input("Enter the time spend (in minutes): ")
 # Exact Search function
 def exact_string_search():
+    clear_screen()
     # Get word or phrase to search for
     search_string = input("Enter a word or phrase to search for: ")
 # Regex Pattern function
 def regex_search():
+    clear_screen()
     # Get the Regex pattern to search for
     search_pattern = input("Enter a regular expression pattern to search for: ")
 # Display Entry function
-def display_entry(search_results):
-    count = 0
-    current_entry = search_results[count]
+def display_entry(search_results, result_count):
+    clear_screen()
+    # Add check for end or beginning of search_results
+    current_entry = search_results[result_count]
 
     print("Task Name: {}".format(current_entry["task"]))
     print("Date: {}".format(current_entry["date"]))
@@ -141,23 +148,34 @@ def display_entry(search_results):
     print("[R]eturn to search menu")
 
     choice = input()
-    entry_navigation(choice)
+    entry_navigation(choice, result_count, current_entry)
 
 # Entry Navigation function
-def entry_navigation(choice):
+def entry_navigation(choice, result_count, current_entry):
     if choice.upper() == "N":
-        display_entry(search_results)
+        result_count += 1
+        display_entry(search_results, result_count)
     elif choice.upper() == "E":
-        pass
+        edit_entry(current_entry, task_list)
     elif choice.upper() == "D":
-        pass
+        delete_entry(current_entry, task_list)
     elif choice.upper() == "P":
-        pass
+        result_count -= 1
+        display_entry(search_results, result_count)
     elif choice.upper() == "R":
         display_search_menu()
 
 # Delete Entry function
+def delete_entry(current_entry, task_list):
+    # How to delete this from task_list?
+    # Check for match of current entry against task_list entries?
+    pass
+
 # Edit Entry function
+def edit_entry(current_entry, task_list):
+    #check current entry against task_list
+    #edit match 
+    pass
 
 # Read / Open File Function
 # Write / Cloase File Function
@@ -165,6 +183,7 @@ def entry_navigation(choice):
 if __name__ == "__main__":
     task_list = []
     search_results = []
+    result_count = 0
     display_main_menu()
 
           
