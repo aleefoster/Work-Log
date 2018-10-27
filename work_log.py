@@ -91,6 +91,7 @@ def display_search_menu():
 # Search Exact Date function
 def date_search():
     clear_screen()
+    reset_search(search_results, result_count)
     # List dates
     unique_dates = []
     for item in task_list:
@@ -104,6 +105,9 @@ def date_search():
         print(item)
     # Get Date
     search_date = input("Enter date to search for (MM/DD/YYYY): ")
+    # Validate user input is existing date
+    # Validate user input is a date in the correct format
+
     # Add matching results to search_results
     for item in task_list:
         if item["date"] == search_date:
@@ -113,24 +117,43 @@ def date_search():
 # Search Date Range function
 def date_range_search():
     clear_screen()
+    reset_search(search_results, result_count)
     # Get Start Date
     start_date = input("Enter the start date (MM/DD/YYYY): ")
     # Get End Date
     end_date = input("Enter the end date (MM/DD/YYYY): ")
+    for item in task_list:
+        if item["date"] >= start_date and item["date"] <= end_date:
+            search_results.append(item)
     # Call display entries
+    display_entry(search_results, result_count)
+
 # Time Spent function
 def time_spent_search():
     clear_screen()
+    reset_search(search_results, result_count)
     # Get time spent (in minutes)
     time_spent = input("Enter the time spend (in minutes): ")
+    for item in task_list:
+        if item["time"] == time_spent:
+            search_results.append(item)
+    display_entry(search_results, result_count)
+
 # Exact Search function
 def exact_string_search():
     clear_screen()
+    reset_search(search_results, result_count)
     # Get word or phrase to search for
     search_string = input("Enter a word or phrase to search for: ")
+    for item in task_list:
+        if search_string in item["task"] or search_string in item["notes"]:
+            search_results.append(item)
+    display_entry(search_results, result_count)
+
 # Regex Pattern function
 def regex_search():
     clear_screen()
+    reset_search(search_results, result_count)
     # Get the Regex pattern to search for
     search_pattern = input("Enter a regular expression pattern to search for: ")
 # Display Entry function
@@ -177,6 +200,10 @@ def edit_entry(current_entry, task_list):
     #edit match 
     pass
 
+def reset_search(search_results, result_count):
+    search_results = []
+    result_count = 0
+
 # Read / Open File Function
 # Write / Cloase File Function
 
@@ -185,6 +212,3 @@ if __name__ == "__main__":
     search_results = []
     result_count = 0
     display_main_menu()
-
-          
-
